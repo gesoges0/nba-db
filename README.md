@@ -3,10 +3,10 @@ NBA stats DB api
 
 ### build
 ```sh
-./docker-compose build
+docker-compose build
 ```
 
 ### insert
 ```sh
-./docker-compose up
+docker-compose up
 ```

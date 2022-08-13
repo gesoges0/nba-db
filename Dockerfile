@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 RUN /usr/local/bin/python -m pip install --upgrade pip
-RUN pip install mysqlclient
+RUN pip install mysqlclient nba-api
 
 COPY ./example.py /app/example.py
 WORKDIR /app
