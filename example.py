@@ -1,5 +1,6 @@
-import MySQLdb
 import time
+
+import MySQLdb
 
 # MySQLの起動を待つため
 time.sleep(5)
