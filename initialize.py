@@ -1,5 +1,6 @@
 import time
-from dataclasses import dataclass
+from typing import Any
+from dataclasses import dataclass, field
 
 import MySQLdb
 
@@ -16,31 +17,22 @@ class DB:
     db: str
 
     def __post_init__(self):
-        connection = MySQLdb.connect(
+       self.connection = MySQLdb.connect(
             host=self.host, user=self.user, passwd=self.passwd, db=self.db
         )
 
-    def execute(self, query):
-        self.cursor.execute(query)
-
-    def fetchall(self):
-        return self.cursor.fetchall()
-
-    def close(self):
-        self.connection.close()
-
-    @property
-    def cursor(self):
-        return self.connection.cursor()
-
+    def _execute(self, query: str):
+        with self.connection:
+            cursor = self.connection.cursor()
+            cursor.execute(query)
+            return cursor.fetchall()
 
 if __name__ == "__main__":
     # MySQLの起動を5秒待つ
-    sleep(5)
+    sleep(10)
 
     # DBを初期化
     db: DB = DB(host="db", user="docker", passwd="docker", db="test_database")
-    db.execute("SHOW CREATE DATABASE test_database;")
-    for i, row in enumerate(db.fetchall()):
-        print(i, row)
-    db.close()
+    records = db._execute("SHOW CREATE DATABASE test_database;")
+    for i, record in enumerate(records):
+        print(i, record)

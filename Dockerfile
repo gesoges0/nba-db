@@ -7,6 +7,6 @@ RUN apt-get update && \
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install mysqlclient nba-api
 
-COPY ./example.py /app/example.py
+COPY ./initialize.py /app/initialize.py
 WORKDIR /app
-CMD python ./example.py
+CMD python ./initialize.py
