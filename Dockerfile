@@ -5,8 +5,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 RUN /usr/local/bin/python -m pip install --upgrade pip
-RUN pip install mysqlclient nba-api
+RUN pip install mysqlclient nba-api SQLAlchemy mysql-connector-python
 
-COPY ./initialize.py /app/initialize.py
+COPY ./src /app/src
 WORKDIR /app
-CMD python ./initialize.py
+CMD python ./src/initialize.py
