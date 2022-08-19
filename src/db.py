@@ -1,10 +1,10 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Any
 
-from sqlalchemy import create_engine
+from sqlalchemy import Boolean, Column, DateTime, Integer, Text, create_engine
+from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Text, Boolean
 
 
 @dataclass
@@ -16,7 +16,9 @@ class DB:
 
     def __post_init__(self):
         # engine の設定
-        self.engine = create_engine(f"mysql+mysqlconnector://{self.user}:{self.passwd}@{self.host}/{self.db}")
+        self.engine = create_engine(
+            f"mysql+mysqlconnector://{self.user}:{self.passwd}@{self.host}/{self.db}"
+        )
 
         # session の作成
         self.db_session = scoped_session(
@@ -37,6 +39,18 @@ def create_tables():
     Base.metadata.create_all(bind=db.engine)
 
 
+class Timestamp:
+    @declared_attr
+    def created_at(cls):
+        return Column(DateTime, default=datetime.now(), nullable=False)
+
+    @declared_attr
+    def updated_at(cls):
+        return Column(
+            DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        )
+
+
 class Players:
     id = Column(Integer, primary_key=True)
     full_name = Column(Text)
@@ -45,7 +59,7 @@ class Players:
     is_active = Column(Boolean)
 
 
-class AllPlayers(Base, Players):
+class AllPlayers(Base, Players, Timestamp):
     """
     +------------+------------+------+-----+---------+----------------+
     | Field      | Type       | Null | Key | Default | Extra          |
@@ -57,12 +71,13 @@ class AllPlayers(Base, Players):
     | is_active  | tinyint(1) | YES  |     | NULL    |                |
     +------------+------------+------+-----+---------+----------------+
     """
-    __tablename__ = 'all_players'
+
+    __tablename__ = "all_players"
 
 
-class ActivePlayers(Base, Players):
+class ActivePlayers(Base, Players, Timestamp):
     __tablename__ = "active_players"
 
 
-class InactivePlayers(Base, Players):
+class InactivePlayers(Base, Players, Timestamp):
     __tablename__ = "inactive_players"
