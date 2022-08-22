@@ -1,8 +1,9 @@
 import time
 
-from nba_api.stats.static import players
+from nba_api.stats.static import players, teams
 
-from db import ActivePlayers, AllPlayers, InactivePlayers, create_tables, db
+from db import (ActivePlayers, AllPlayers, InactivePlayers, Teams,
+                create_tables, db)
 
 
 def sleep(seconds: int) -> None:
@@ -18,48 +19,23 @@ def initialize():
     create_tables()
 
     # insert all players records
-    db.db_session.bulk_save_objects(
-        [
-            AllPlayers(
-                id=p["id"],
-                full_name=p["full_name"],
-                first_name=p["first_name"],
-                last_name=p["last_name"],
-                is_active=p["is_active"],
-            )
-            for p in players.get_players()
-        ]
-    )
+    db.db_session.bulk_save_objects([AllPlayers(**p) for p in players.get_players()])
     db.db_session.commit()
 
     # insert active players records
     db.db_session.bulk_save_objects(
-        [
-            ActivePlayers(
-                id=p["id"],
-                full_name=p["full_name"],
-                first_name=p["first_name"],
-                last_name=p["last_name"],
-                is_active=p["is_active"],
-            )
-            for p in players.get_active_players()
-        ]
+        [ActivePlayers(**p) for p in players.get_active_players()]
     )
     db.db_session.commit()
 
     # insert inactive players records
     db.db_session.bulk_save_objects(
-        [
-            InactivePlayers(
-                id=p["id"],
-                full_name=p["full_name"],
-                first_name=p["first_name"],
-                last_name=p["last_name"],
-                is_active=p["is_active"],
-            )
-            for p in players.get_inactive_players()
-        ]
+        [InactivePlayers(**p) for p in players.get_inactive_players()]
     )
+    db.db_session.commit()
+
+    # insert teams
+    db.db_session.bulk_save_objects([Teams(**t) for t in teams.get_teams()])
     db.db_session.commit()
 
 

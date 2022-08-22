@@ -1,6 +1,5 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
-from typing import Any
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
@@ -51,15 +50,7 @@ class Timestamp:
         )
 
 
-class Players:
-    id = Column(Integer, primary_key=True)
-    full_name = Column(Text)
-    first_name = Column(Text)
-    last_name = Column(Text)
-    is_active = Column(Boolean)
-
-
-class AllPlayers(Base, Players, Timestamp):
+class Players(Timestamp):
     """
     +------------+------------+------+-----+---------+----------------+
     | Field      | Type       | Null | Key | Default | Extra          |
@@ -72,12 +63,31 @@ class AllPlayers(Base, Players, Timestamp):
     +------------+------------+------+-----+---------+----------------+
     """
 
+    id = Column(Integer, primary_key=True)
+    full_name = Column(Text)
+    first_name = Column(Text)
+    last_name = Column(Text)
+    is_active = Column(Boolean)
+
+
+class AllPlayers(Base, Players):
     __tablename__ = "all_players"
 
 
-class ActivePlayers(Base, Players, Timestamp):
+class ActivePlayers(Base, Players):
     __tablename__ = "active_players"
 
 
-class InactivePlayers(Base, Players, Timestamp):
+class InactivePlayers(Base, Players):
     __tablename__ = "inactive_players"
+
+
+class Teams(Base, Timestamp):
+    __tablename__ = "teams"
+    id = Column(Integer, primary_key=True)
+    full_name = Column(Text)
+    abbreviation = Column(Text)
+    nickname = Column(Text)
+    city = Column(Text)
+    state = Column(Text)
+    year_founded = Column(Text)
