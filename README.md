@@ -14,9 +14,7 @@ docker-compose up
 ### mysql 
 another window
 ```sh
-$ docker container exec -it mysql_host bash
-# mysql -uroot -p
-root
+$ docker container exec -it mysql_host bash -c "mysql -uroot -proot"
 # use test_database;
 # select * from inactive_players limit 10;
 mysql> select * from inactive_players limit 10;
@@ -35,5 +33,5 @@ mysql> select * from inactive_players limit 10;
 | 23 | Dennis Rodman   | Dennis     | Rodman     |         0 | 2022-08-19 13:41:37 | 2022-08-19 13:41:37 |
 +----+-----------------+------------+------------+-----------+---------------------+---------------------+
 10 rows in set (0.00 sec)
-
 ```
+

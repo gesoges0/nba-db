@@ -83,6 +83,22 @@ class InactivePlayers(Base, Players):
 
 
 class Teams(Base, Timestamp):
+    """
+    +--------------+----------+------+-----+---------+----------------+
+    | Field        | Type     | Null | Key | Default | Extra          |
+    +--------------+----------+------+-----+---------+----------------+
+    | id           | int(11)  | NO   | PRI | NULL    | auto_increment |
+    | full_name    | text     | YES  |     | NULL    |                |
+    | abbreviation | text     | YES  |     | NULL    |                |
+    | nickname     | text     | YES  |     | NULL    |                |
+    | city         | text     | YES  |     | NULL    |                |
+    | state        | text     | YES  |     | NULL    |                |
+    | year_founded | text     | YES  |     | NULL    |                |
+    | created_at   | datetime | NO   |     | NULL    |                |
+    | updated_at   | datetime | NO   |     | NULL    |                |
+    +--------------+----------+------+-----+---------+----------------+
+    """
+
     __tablename__ = "teams"
     id = Column(Integer, primary_key=True)
     full_name = Column(Text)
