@@ -19,8 +19,8 @@ jobs:
           pip install black==22.3.0 isort==5.10.1 flake8==4.0.1
       # execute tests ~ Formatter ~
       - name: test isort
-        run: isort --check --diff src/
+        run: isort --check --diff *.py src/*.py
       - name: test black
-        run: black --check --diff src/
+        run: black --check --diff *.py src/*.py
       - name: test flake8
-        run: flake8 --ignore=E501 src/
+        run: flake8 --ignore=E501 *.py src/*.py

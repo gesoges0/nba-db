@@ -2,7 +2,7 @@ import time
 
 from nba_api.stats.static import players, teams
 
-from db import ActivePlayers, AllPlayers, InactivePlayers, Teams, create_tables, db
+from src.db import ActivePlayers, AllPlayers, InactivePlayers, Teams, create_tables, db
 
 
 def sleep(seconds: int) -> None:
@@ -10,7 +10,7 @@ def sleep(seconds: int) -> None:
 
 
 # def initialize(): にしてmainからオプションで実行できるようにする
-def initialize():
+def initialize(args):
     # MySQLの起動を待つ
     sleep(10)
 
@@ -36,7 +36,3 @@ def initialize():
     # insert teams
     db.db_session.bulk_save_objects([Teams(**t) for t in teams.get_teams()])
     db.db_session.commit()
-
-
-if __name__ == "__main__":
-    initialize()
