@@ -1,4 +1,4 @@
-name: "test-python-linter"
+name: "test-python-lint"
 
 on: [pull_request, push]
 
