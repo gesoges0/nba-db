@@ -8,5 +8,6 @@ RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install mysqlclient nba-api SQLAlchemy mysql-connector-python
 
 COPY ./src /app/src
+COPY ./main.py /app/main.py
 WORKDIR /app
-CMD python ./src/initialize.py
+CMD python main.py initialize
