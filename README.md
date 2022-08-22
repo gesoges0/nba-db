@@ -3,12 +3,7 @@ NBA stats DB api
 
 ### build
 ```sh
-docker-compose build
-```
-
-### insert
-```sh
-docker-compose up
+$ docker compose build; docker compose up
 ```
 
 ### mysql 
@@ -35,3 +30,12 @@ mysql> select * from inactive_players limit 10;
 10 rows in set (0.00 sec)
 ```
 
+### exit
+```sh
+$ docker compose down
+```
+
+### trouble shooting
+```sh
+$ sudo service docker restart
+```
