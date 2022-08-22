@@ -2,8 +2,7 @@ import time
 
 from nba_api.stats.static import players, teams
 
-from db import (ActivePlayers, AllPlayers, InactivePlayers, Teams,
-                create_tables, db)
+from db import ActivePlayers, AllPlayers, InactivePlayers, Teams, create_tables, db
 
 
 def sleep(seconds: int) -> None:
