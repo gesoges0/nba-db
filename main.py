@@ -1,6 +1,6 @@
 import argparse
 
-from src.initialize import initialize, initialize_stats
+from src.initialize import initialize
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="")
