@@ -1,7 +1,6 @@
 import time
 from typing import Any, Union
 
-import nba_api.stats.library.parameters
 from nba_api.stats import endpoints as ep
 from nba_api.stats.static import players, teams
 
