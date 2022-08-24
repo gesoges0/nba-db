@@ -10,4 +10,4 @@ RUN pip install mysqlclient nba-api SQLAlchemy mysql-connector-python
 COPY ./src /app/src
 COPY ./main.py /app/main.py
 WORKDIR /app
-CMD python main.py initialize
+CMD ["python", "main.py", "initialize"]
