@@ -24,3 +24,14 @@ jobs:
         run: black --check --diff *.py src/*.py
       - name: test flake8
         run: flake8 --ignore=E501 *.py src/*.py
+  style_docker:
+    run-on: ubuntu-latest
+    container:
+      image: hadolint/hadolint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: dockerfile linter
+        run: |
+         docker run --rm -i hadolint/hadolint < Dockerfile
+
