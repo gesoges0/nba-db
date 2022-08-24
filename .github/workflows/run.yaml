@@ -24,3 +24,13 @@ jobs:
         run: black --check --diff *.py src/*.py
       - name: test flake8
         run: flake8 --ignore=E501 *.py src/*.py
+  docker_linter:
+    name: hadolint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: hadolint/hadolint-action@v2.0.0
+        with:
+          dockerfile: ./Dockerfile
+          ignore: DL3008,DL3015,DL3042,DL3013,DL3059
