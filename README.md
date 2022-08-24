@@ -10,8 +10,7 @@ $ docker compose build; docker compose up
 another window
 ```sh
 $ docker container exec -it mysql_host bash -c "mysql -uroot -proot"
-# use test_database;
-# select * from inactive_players limit 10;
+mysql> use test_database;
 mysql> select * from inactive_players limit 10;
 +----+-----------------+------------+------------+-----------+---------------------+---------------------+
 | id | full_name       | first_name | last_name  | is_active | created_at          | updated_at          |
