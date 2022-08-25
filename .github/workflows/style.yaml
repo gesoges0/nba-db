@@ -44,7 +44,7 @@ jobs:
         uses: ibiqlik/action-yamllint@v3
         with:
           file_or_dir: .github/workflows/* docker-compose.yml
-          config_data:
+          config_data: |
             rules:
               line-length:
                 max: 90
