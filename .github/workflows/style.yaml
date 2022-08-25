@@ -45,5 +45,6 @@ jobs:
         with:
           file_or_dir: .github/workflows/* docker-compose.yml
           config_date:
-            line-length:
-              max: 90
+            rules:
+              line-length:
+                max: 90
