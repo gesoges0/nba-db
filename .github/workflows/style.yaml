@@ -2,7 +2,7 @@
 
 name: "test-python-lint"
 
-on: [pull_request]
+on: pull_request
 
 jobs:
   python_lint:
