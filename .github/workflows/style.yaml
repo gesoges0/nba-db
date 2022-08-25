@@ -3,7 +3,7 @@ name: "test-python-lint"
 on: [pull_request, push]
 
 jobs:
-  style:
+  python_lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,8 +24,7 @@ jobs:
         run: black --check --diff *.py src/*.py
       - name: test flake8
         run: flake8 --ignore=E501 *.py src/*.py
-  docker_linter:
-    name: hadolint
+  docker_lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,3 +33,9 @@ jobs:
         with:
           dockerfile: ./Dockerfile
           ignore: DL3008,DL3015,DL3042,DL3013,DL3059
+  yaml_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
