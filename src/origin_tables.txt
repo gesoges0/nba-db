@@ -1,0 +1,5 @@
+# PlayerGameLog
+player's stats by each season
+{'SEASON_ID': '22021', 'Player_ID': 202331, 'Game_ID': '0022100016', 'GAME_DATE': 'OCT 21, 2021', 'MATCHUP': 'LAC @ GSW', 'WL': 'L', 'MIN': 37, 'FGM': 12, 'FGA': 23, 'FG_PCT': 0.522, 'FG3M': 5, 'FG3A': 11, 'FG3_PCT': 0.455, 'FTM': 0, 'FTA': 0, 'FT_PCT': 0.0, 'OREB': 1, 'DREB': 10, 'REB': 11, 'AST': 6, 'STL': 2, 'BLK': 0, 'TOV': 3, 'PF': 3, 'PTS': 29, 'PLUS_MINUS': 9, 'VIDEO_AVAILABLE': 1}
+
+# hoge
