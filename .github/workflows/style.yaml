@@ -23,7 +23,7 @@ jobs:
       # execute tests ~ Formatter ~
       - name: test isort
         # run: isort --check --diff *.py src/*.py
-        isort --settings-path config *.py src/
+        run: isort --settings-path config *.py src/
       - name: test black
         run: black --check --diff *.py src/*.py
       - name: test flake8
