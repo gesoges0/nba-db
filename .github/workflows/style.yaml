@@ -19,7 +19,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install black==22.3.0 isort==5.10.1 flake8==4.0.1
+          pip install black==22.3.0 isort==5.10.1 flake8==4.0.1 mypy==0.971
       # execute tests ~ Formatter ~
       - name: test isort
         run: isort --check --diff *.py src/*.py
@@ -27,6 +27,8 @@ jobs:
         run: black --check --diff *.py src/*.py
       - name: test flake8
         run: flake8 --ignore=E501 *.py src/*.py
+      - name: test mypy
+        run: mypy main.py
   docker_lint:
     runs-on: ubuntu-latest
     steps:
