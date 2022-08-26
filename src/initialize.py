@@ -3,7 +3,6 @@ from typing import Any, Union
 
 from nba_api.stats import endpoints as ep
 from nba_api.stats.static import players, teams
-
 from src.db import ActivePlayers, AllPlayers, InactivePlayers, Teams, create_tables, db
 from src.tables import PlayerGameLog
 
