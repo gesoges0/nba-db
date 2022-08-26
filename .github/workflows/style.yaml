@@ -28,7 +28,7 @@ jobs:
       - name: test flake8
         run: flake8 --ignore=E501 *.py src/*.py
       - name: test mypy
-        run: mypy main.py
+        run: mypy main.py --config-file config/mypy.cfg 
   docker_lint:
     runs-on: ubuntu-latest
     steps:
