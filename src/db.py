@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Any
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
@@ -30,7 +31,7 @@ class DB:
 
 
 db = DB(host="db", user="docker", passwd="docker", db="test_database")
-Base = declarative_base()
+Base = declarative_base()  # type: Any
 Base.query = db.db_session.query_property()
 
 
