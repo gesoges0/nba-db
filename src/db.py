@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import cast
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm.decl_api import DeclarativeMeta
 
 
 @dataclass
@@ -29,15 +31,6 @@ class DB:
         )
 
 
-db = DB(host="db", user="docker", passwd="docker", db="test_database")
-Base = declarative_base()
-Base.query = db.db_session.query_property()
-
-
-def create_tables():
-    Base.metadata.create_all(bind=db.engine)
-
-
 class Timestamp:
     @declared_attr
     def created_at(cls):
@@ -50,7 +43,16 @@ class Timestamp:
         )
 
 
-class Players(Timestamp):
+db = DB(host="db", user="docker", passwd="docker", db="test_database")
+Base: DeclarativeMeta = cast(DeclarativeMeta, declarative_base(cls=Timestamp))
+Base.query = db.db_session.query_property()
+
+
+def create_tables():
+    Base.metadata.create_all(bind=db.engine)
+
+
+class Players:
     """
     +------------+------------+------+-----+---------+-------+
     | Field      | Type       | Null | Key | Default | Extra |
@@ -84,7 +86,7 @@ class InactivePlayers(Base, Players):
     __tablename__ = "inactive_players"
 
 
-class Teams(Base, Timestamp):
+class Teams(Base):
     """
     +--------------+----------+------+-----+---------+-------+
     | Field        | Type     | Null | Key | Default | Extra |

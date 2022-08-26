@@ -1,9 +1,9 @@
 from sqlalchemy import Boolean, Column, Float, Integer, String, Text
 
-from src.db import Base, Timestamp
+from src.db import Base
 
 
-class PlayerGameLog(Base, Timestamp):
+class PlayerGameLog(Base):
     """
     player's stats by each season
     """
