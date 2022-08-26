@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: pysqlclient
+    # command: >
+    # tail -f /dev/null
   db:
     image: mysql:8.0
     container_name: mysql_host
