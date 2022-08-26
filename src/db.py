@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
@@ -30,15 +29,6 @@ class DB:
         )
 
 
-db = DB(host="db", user="docker", passwd="docker", db="test_database")
-Base = declarative_base()  # type: Any
-Base.query = db.db_session.query_property()
-
-
-def create_tables():
-    Base.metadata.create_all(bind=db.engine)
-
-
 class Timestamp:
     @declared_attr
     def created_at(cls):
@@ -51,7 +41,16 @@ class Timestamp:
         )
 
 
-class Players(Timestamp):
+db = DB(host="db", user="docker", passwd="docker", db="test_database")
+Base = declarative_base(cls=Timestamp)
+Base.query = db.db_session.query_property()
+
+
+def create_tables():
+    Base.metadata.create_all(bind=db.engine)
+
+
+class Players:
     """
     +------------+------------+------+-----+---------+-------+
     | Field      | Type       | Null | Key | Default | Extra |
@@ -73,19 +72,19 @@ class Players(Timestamp):
     is_active = Column(Boolean)
 
 
-class AllPlayers(Base, Players):
+class AllPlayers(Base, Players):  # type: ignore
     __tablename__ = "all_players"
 
 
-class ActivePlayers(Base, Players):
+class ActivePlayers(Base, Players):  # type: ignore
     __tablename__ = "active_players"
 
 
-class InactivePlayers(Base, Players):
+class InactivePlayers(Base, Players):  # type: ignore
     __tablename__ = "inactive_players"
 
 
-class Teams(Base, Timestamp):
+class Teams(Base):  # type: ignore
     """
     +--------------+----------+------+-----+---------+-------+
     | Field        | Type     | Null | Key | Default | Extra |
