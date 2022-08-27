@@ -4,7 +4,7 @@ from typing import Any, Union
 from nba_api.stats import endpoints as ep
 from nba_api.stats.static import players, teams
 from src.db import ActivePlayers, AllPlayers, InactivePlayers, Teams, create_tables, db
-from src.tables import PlayerGameLog
+from src.tables import PlayerGameLog, TeamGameLog
 
 GAMELOG = dict[str, Any]
 
@@ -83,6 +83,21 @@ def initialize_stats():
                 for p in active_players[10:20]
             )
             for player_game_log_dict in player_game_log_dicts
+        ]
+    )
+    db.db_session.commit()
+
+    # current season teams
+    db.db_session.bulk_save_objects(
+        [
+            TeamGameLog(**team_game_log_dict)
+            for team_game_log_dicts in (
+                ep.teamgamelog.TeamGameLog(team_id=t["id"]).get_normalized_dict()[
+                    "TeamGameLog"
+                ]
+                for t in teams.get_teams()[:3]
+            )
+            for team_game_log_dict in team_game_log_dicts
         ]
     )
     db.db_session.commit()
