@@ -2,8 +2,7 @@
 
 name: "test-lint"
 
-on:  # yamllint disable-line rule:truthy
-  pull_request:
+on: ["pull_request", "push"]
 
 jobs:
   python_lint:
