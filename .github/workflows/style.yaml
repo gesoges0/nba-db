@@ -30,8 +30,6 @@ jobs:
         run: flake8 --ignore=E501 *.py src/*.py
       - name: test mypy
         run: mypy main.py --config-file config/mypy.cfg
-      - name: test radon
-        run: radon cc main.py src/ -a -nB
       - name: test xenon
         run: xenon -b A -m A -a A main.py src/
   docker_lint:

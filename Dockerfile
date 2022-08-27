@@ -11,7 +11,6 @@ RUN pip install --no-cache-dir \
     SQLAlchemy==1.4.40 \
     mysql-connector-python==8.0.30 \
     numpy==1.23.2 \
-    radon==5.1.0 \
     xenon==0.9.0
 
 COPY ./src /app/src
