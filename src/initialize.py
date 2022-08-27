@@ -61,7 +61,7 @@ def initialize_stats():
     _update_current_season_team_game_log_table()
 
 
-def _get_player_game_log_dicts() -> Iterator[dict[str, GAMELOG]]:
+def _get_player_game_log_dicts() -> Iterator[GAMELOG]:
     for i, p in enumerate(active_players[:20]):
         player_game_log: list[GAMELOG] = ep.playergamelog.PlayerGameLog(
             player_id=p["id"]
@@ -82,7 +82,7 @@ def _update_current_season_player_game_log_table() -> None:
     db.db_session.commit()
 
 
-def _get_team_game_log_dicts() -> Iterator[dict[str, GAMELOG]]:
+def _get_team_game_log_dicts() -> Iterator[GAMELOG]:
     for i, t in enumerate(teams.get_teams()[:20]):
         team_game_log: list[GAMELOG] = ep.teamgamelog.TeamGameLog(
             team_id=t["id"]
@@ -101,10 +101,6 @@ def _update_current_season_team_game_log_table() -> None:
         ]
     )
     db.db_session.commit()
-
-
-def get_all_season_all_game_logs(season_id: str) -> list[GAMELOG]:
-    return inactive_players
 
 
 def get_current_season_all_game_logs() -> list[GAMELOG]:
