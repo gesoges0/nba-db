@@ -1,5 +1,5 @@
 import time
-from typing import Any, Iterator, Union
+from typing import Iterator, Union
 
 from nba_api.stats import endpoints as ep
 from nba_api.stats.static import players, teams
