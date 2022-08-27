@@ -13,7 +13,7 @@ class PlayerGameLog(Base):
     SEASON_ID = Column(String(16), primary_key=True, autoincrement=False)
     Player_ID = Column(Integer, primary_key=True, autoincrement=False)
     Game_ID = Column(String(16), primary_key=True, autoincrement=False)
-    GAME_DATE = Column(String(16), primary_key=True, autoincrement=False)
+    GAME_DATE = Column(Text)
     MATCHUP = Column(Text)
     WL = Column(Text)
     MIN = Column(Integer)

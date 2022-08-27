@@ -1,5 +1,5 @@
 import time
-from typing import Any, Union
+from typing import Any, Iterator, Union
 
 from nba_api.stats import endpoints as ep
 from nba_api.stats.static import players, teams
@@ -7,7 +7,7 @@ from nba_api.stats.static import players, teams
 from src.db import ActivePlayers, AllPlayers, InactivePlayers, Teams, create_tables, db
 from src.tables import PlayerGameLog, TeamGameLog
 
-GAMELOG = dict[str, Any]
+GAMELOG = dict[str, Union[str, int, float]]
 
 
 def sleep(seconds: int) -> None:
@@ -61,33 +61,43 @@ def initialize_stats():
     _update_current_season_team_game_log_table()
 
 
-def _update_current_season_player_game_log_table():
+def _get_player_game_log_dicts() -> Iterator[dict[str, GAMELOG]]:
+    for i, p in enumerate(active_players[:20]):
+        player_game_log: list[GAMELOG] = ep.playergamelog.PlayerGameLog(
+            player_id=p["id"]
+        ).get_normalized_dict()["PlayerGameLog"]
+        print(i, p)
+        time.sleep(1)
+        for player_game_log_dict in player_game_log:
+            yield player_game_log_dict
+
+
+def _update_current_season_player_game_log_table() -> None:
     db.db_session.bulk_save_objects(
         [
             PlayerGameLog(**player_game_log_dict)
-            for player_game_log_dicts in (
-                ep.playergamelog.PlayerGameLog(player_id=p["id"]).get_normalized_dict()[
-                    "PlayerGameLog"
-                ]
-                for p in active_players[10:20]
-            )
-            for player_game_log_dict in player_game_log_dicts
+            for player_game_log_dict in _get_player_game_log_dicts()
         ]
     )
     db.db_session.commit()
 
 
-def _update_current_season_team_game_log_table():
+def _get_team_game_log_dicts() -> Iterator[dict[str, GAMELOG]]:
+    for i, t in enumerate(teams.get_teams()[:20]):
+        team_game_log: list[GAMELOG] = ep.teamgamelog.TeamGameLog(
+            team_id=t["id"]
+        ).get_normalized_dict()["TeamGameLog"]
+        print(i, t)
+        time.sleep(1)
+        for team_game_log_dict in team_game_log:
+            yield team_game_log_dict
+
+
+def _update_current_season_team_game_log_table() -> None:
     db.db_session.bulk_save_objects(
         [
             TeamGameLog(**team_game_log_dict)
-            for team_game_log_dicts in (
-                ep.teamgamelog.TeamGameLog(team_id=t["id"]).get_normalized_dict()[
-                    "TeamGameLog"
-                ]
-                for t in teams.get_teams()[:3]
-            )
-            for team_game_log_dict in team_game_log_dicts
+            for team_game_log_dict in _get_team_game_log_dicts()
         ]
     )
     db.db_session.commit()
