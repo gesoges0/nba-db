@@ -3,6 +3,7 @@ from typing import Any, Union
 
 from nba_api.stats import endpoints as ep
 from nba_api.stats.static import players, teams
+
 from src.db import ActivePlayers, AllPlayers, InactivePlayers, Teams, create_tables, db
 from src.tables import PlayerGameLog, TeamGameLog
 
@@ -55,24 +56,12 @@ def initialize(args):
 
 def initialize_stats():
     """initialize stats tables"""
+    # current_season
+    _update_current_season_player_game_log_table()
+    _update_current_season_team_game_log_table()
 
-    # 今シーズンの全ゲームログ
 
-    # 副作用あり
-    # a = []
-    # for p in players.get_players()[:20]:
-    #     player_game_log: list[dict[str, Any]] = ep.playergamelog.PlayerGameLog(
-    #         player_id=p["id"]
-    #     ).get_normalized_dict()["PlayerGameLog"]
-    #     # if not player_game_log:
-    #     #     continue
-    #     for player_game_log_dict in player_game_log:
-    #         a.append(PlayerGameLog(**player_game_log_dict))
-    # if a:
-    #     db.db_session.bulk_save_objects(a)
-    #     db.db_session.commit()
-
-    # 副作用なし
+def _update_current_season_player_game_log_table():
     db.db_session.bulk_save_objects(
         [
             PlayerGameLog(**player_game_log_dict)
@@ -87,7 +76,8 @@ def initialize_stats():
     )
     db.db_session.commit()
 
-    # current season teams
+
+def _update_current_season_team_game_log_table():
     db.db_session.bulk_save_objects(
         [
             TeamGameLog(**team_game_log_dict)
