@@ -25,7 +25,6 @@ mysql> SELECT * FROM inactive_players LIMIT 3;
 +----+-----------------+------------+------------+-----------+---------------------+---------------------+
 3 rows in set (0.00 sec)
 
-
 mysql> SELECT * FROM player_game_log LIMIT 3;
 +-----------+-----------+------------+--------------+-------------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+------------+-----------------+---------------------+---------------------+
 | SEASON_ID | Player_ID | Game_ID    | GAME_DATE    | MATCHUP     | WL   | MIN  | FGM  | FGA  | FG_PCT | FG3M | FG3A | FG3_PCT | FTM  | FTA  | FT_PCT | OREB | DREB | REB  | AST  | STL  | BLK  | TOV  | PF   | PTS  | PLUS_MINUS | VIDEO_AVAILABLE | created_at          | updated_at          |
