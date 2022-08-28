@@ -3,7 +3,12 @@ NBA stats DB api
 
 ### build
 ```sh
-$ docker compose build; docker compose up
+$ docker compose build
+```
+
+### run containers
+```
+$ docker compose up
 ```
 
 ### mysql 
