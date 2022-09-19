@@ -14,11 +14,6 @@ def sleep(seconds: int) -> None:
     time.sleep(seconds)
 
 
-all_players: list[dict[str, Union[int, str]]] = players.get_players()
-active_players: list[dict[str, Union[int, str]]] = players.get_players()
-inactive_players: list[dict[str, Union[int, str]]] = players.get_players()
-
-
 # def initialize(): にしてmainからオプションで実行できるようにする
 def initialize(args):
     """
@@ -62,7 +57,7 @@ def initialize_stats():
 
 
 def _get_player_game_log_dicts() -> Iterator[GAMELOG]:
-    for i, p in enumerate(active_players[:20]):
+    for i, p in enumerate(players.get_active_players()[:20]):
         player_game_log: list[GAMELOG] = ep.playergamelog.PlayerGameLog(
             player_id=p["id"]
         ).get_normalized_dict()["PlayerGameLog"]
@@ -76,7 +71,7 @@ def _update_current_season_player_game_log_table() -> None:
 
     # ------------------------------------------------------------------------------------------
     # debug
-    with open("/app/src/team_debug.txt", "w") as f:
+    with open("/app/src/debug/player.txt", "w") as f:
         for i, player_game_log_dict in enumerate(_get_player_game_log_dicts()):
             f.write(f"{player_game_log_dict}\n")
     # ------------------------------------------------------------------------------------------
@@ -102,6 +97,14 @@ def _get_team_game_log_dicts() -> Iterator[GAMELOG]:
 
 
 def _update_current_season_team_game_log_table() -> None:
+
+    # ------------------------------------------------------------------------------------------
+    # debug
+    with open("/app/src/debug/teams.txt", "w") as f:
+        for i, team_game_log_dict in enumerate(_get_team_game_log_dicts()):
+            f.write(f"{team_game_log_dict}\n")
+    # ------------------------------------------------------------------------------------------
+
     db.db_session.bulk_save_objects(
         [
             TeamGameLog(**team_game_log_dict)
@@ -119,7 +122,7 @@ def get_current_season_all_game_logs() -> list[GAMELOG]:
             ep.playergamelog.PlayerGameLog(
                 player_id=p["id"],
             ).get_normalized_dict()["PlayerGameLog"]
-            for p in active_players
+            for p in players.get_active_players()
         )
         for player_game_log_dict in player_game_log_dicts
     ]
