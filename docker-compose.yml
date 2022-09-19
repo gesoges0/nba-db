@@ -1,13 +1,6 @@
 ---
 version: "3.4"
 services:
-  app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    container_name: pysqlclient
-    # command: >
-    # tail -f /dev/null
   db:
     image: mysql:8.0
     container_name: mysql_host
@@ -21,3 +14,15 @@ services:
       mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - 3306:3306
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - db
+    container_name: pysqlclient
+    volumes:
+      - ./src:/app/src
+    working_dir: /app
+    command: >
+      python main.py initialize
