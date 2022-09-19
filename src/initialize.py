@@ -73,6 +73,14 @@ def _get_player_game_log_dicts() -> Iterator[GAMELOG]:
 
 
 def _update_current_season_player_game_log_table() -> None:
+
+    # ------------------------------------------------------------------------------------------
+    # debug
+    with open('/app/src/team_debug.txt', 'w') as f:
+        for i, player_game_log_dict in enumerate(_get_player_game_log_dicts()):
+            f.write(f'{player_game_log_dict}\n')
+    # ------------------------------------------------------------------------------------------
+
     db.db_session.bulk_save_objects(
         [
             PlayerGameLog(**player_game_log_dict)
