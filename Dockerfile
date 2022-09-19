@@ -12,5 +12,5 @@ RUN pip install --no-cache-dir \
     mysql-connector-python==8.0.30 \
     numpy==1.23.2
 
-RUN mkdir -p /app/src
+RUN mkdir -p /app/src/debug
 COPY ./main.py /app/main.py
