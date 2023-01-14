@@ -1,12 +1,8 @@
 from nba_api.stats.static import players, teams
 
 from src.db import db
-from src.tables import (
-    ActivePlayers,  # PlayerGameLog,; TeamGameLog,
-    AllPlayers,
-    InactivePlayers,
-    Teams,
-)
+from src.tables import ActivePlayers  # PlayerGameLog,; TeamGameLog,
+from src.tables import AllPlayers, InactivePlayers, Teams
 
 
 def initialize_teams():
