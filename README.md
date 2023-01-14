@@ -48,6 +48,7 @@ mysql> SELECT * FROM team_game_log LIMIT 3;
 ```
 
 ### exit
+This operation erases the DB container, so the data you put in the DB will disappear.
 ```sh
 $ docker compose down
 ```
