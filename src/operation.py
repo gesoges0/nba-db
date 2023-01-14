@@ -4,7 +4,13 @@ from typing import Iterator, Union
 from nba_api.stats import endpoints as ep
 from nba_api.stats.static import players, teams
 
-from src.db import ActivePlayers, AllPlayers, InactivePlayers, Teams, create_tables, db
+from src.api import (
+    initialize_active_players,
+    initialize_all_players,
+    initialize_inactive_players,
+    initialize_teams,
+)
+from src.db import create_tables, db
 from src.tables import PlayerGameLog, TeamGameLog
 
 GAMELOG = dict[str, Union[str, int, float]]
@@ -26,27 +32,21 @@ def initialize(args):
     # db
     create_tables()
 
-    # insert all players records
-    db.db_session.bulk_save_objects([AllPlayers(**p) for p in players.get_players()])
-    db.db_session.commit()
+    # player tables
+    initialize_active_players()
+    initialize_inactive_players()
+    initialize_all_players()
 
-    # insert active players records
-    db.db_session.bulk_save_objects(
-        [ActivePlayers(**p) for p in players.get_active_players()]
-    )
-    db.db_session.commit()
+    # team tables
+    initialize_teams()
 
     # insert inactive players records
-    db.db_session.bulk_save_objects(
-        [InactivePlayers(**p) for p in players.get_inactive_players()]
-    )
-    db.db_session.commit()
+    # db.db_session.bulk_save_objects(
+    #     [InactivePlayers(**p) for p in players.get_inactive_players()]
+    # )
+    # db.db_session.commit()
 
-    # insert teams
-    db.db_session.bulk_save_objects([Teams(**t) for t in teams.get_teams()])
-    db.db_session.commit()
-
-    initialize_stats()
+    # initialize_stats()
 
 
 def initialize_stats():
