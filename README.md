@@ -56,9 +56,3 @@ $ docker compose down
 ```sh
 $ sudo service docker restart
 ```
-
-
-### model auto creation
-+ execute nba-api from python script like [this]() 
-+ copy result and paste origin_table.txt like [this]()
-+ execute create_table script and check [tables.py]()
