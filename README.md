@@ -17,22 +17,6 @@ use mysql on another window
 $ docker container exec -it mysql_host bash -c "mysql test_database -uroot -proot"
 ```
 
-show all tables
-```sh
-mysql> show tables;
-+-------------------------+
-| Tables_in_test_database |
-+-------------------------+
-| active_players          |
-| all_players             |
-| inactive_players        |
-| player_game_log         |
-| team_game_log           |
-| teams                   |
-+-------------------------+
-6 rows in set (0.00 sec)
-```
-
 show player table
 ```sh
 mysql> SELECT * FROM inactive_players LIMIT 3;
