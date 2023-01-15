@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import cast
 
-from sqlalchemy import (Column, DateTime,  # Integer, Text, Boolean
-                        create_engine)
+from sqlalchemy import Column, DateTime, create_engine  # Integer, Text, Boolean
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.orm.decl_api import DeclarativeMeta

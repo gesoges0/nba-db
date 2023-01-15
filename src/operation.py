@@ -1,8 +1,13 @@
 import time
 
-from src.api import (initialize_active_players, initialize_all_players,
-                     initialize_inactive_players, initialize_player_game_log,
-                     initialize_team_game_log, initialize_teams)
+from src.api import (
+    initialize_active_players,
+    initialize_all_players,
+    initialize_inactive_players,
+    initialize_player_game_log,
+    initialize_team_game_log,
+    initialize_teams,
+)
 from src.db import create_tables
 
 

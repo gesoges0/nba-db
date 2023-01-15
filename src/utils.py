@@ -18,3 +18,13 @@ def iterate_and_wait(
     for i in iter:
         yield i
         time.sleep(sleeping_sec)
+
+
+def display_func_name(func):
+    def display(*args):
+        arg_str: str = ", ".join(repr(arg) for arg in args)
+        func_name: str = func.__name__
+        print(f"execute: {func_name}({arg_str})")
+        return func(*args)
+
+    return display
