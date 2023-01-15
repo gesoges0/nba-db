@@ -66,7 +66,39 @@ class Teams(Base):
 
 class PlayerGameLog(Base):
     """
-    player's stats by each season
+    +-----------------+-------------+------+-----+---------+-------+
+    | Field           | Type        | Null | Key | Default | Extra |
+    +-----------------+-------------+------+-----+---------+-------+
+    | SEASON_ID       | varchar(16) | NO   | PRI | NULL    |       |
+    | Player_ID       | int         | NO   | PRI | NULL    |       |
+    | Game_ID         | varchar(16) | NO   | PRI | NULL    |       |
+    | GAME_DATE       | text        | YES  |     | NULL    |       |
+    | MATCHUP         | text        | YES  |     | NULL    |       |
+    | WL              | text        | YES  |     | NULL    |       |
+    | MIN             | int         | YES  |     | NULL    |       |
+    | FGM             | int         | YES  |     | NULL    |       |
+    | FGA             | int         | YES  |     | NULL    |       |
+    | FG_PCT          | float       | YES  |     | NULL    |       |
+    | FG3M            | int         | YES  |     | NULL    |       |
+    | FG3A            | int         | YES  |     | NULL    |       |
+    | FG3_PCT         | float       | YES  |     | NULL    |       |
+    | FTM             | int         | YES  |     | NULL    |       |
+    | FTA             | int         | YES  |     | NULL    |       |
+    | FT_PCT          | float       | YES  |     | NULL    |       |
+    | OREB            | int         | YES  |     | NULL    |       |
+    | DREB            | int         | YES  |     | NULL    |       |
+    | REB             | int         | YES  |     | NULL    |       |
+    | AST             | int         | YES  |     | NULL    |       |
+    | STL             | int         | YES  |     | NULL    |       |
+    | BLK             | int         | YES  |     | NULL    |       |
+    | TOV             | int         | YES  |     | NULL    |       |
+    | PF              | int         | YES  |     | NULL    |       |
+    | PTS             | int         | YES  |     | NULL    |       |
+    | PLUS_MINUS      | int         | YES  |     | NULL    |       |
+    | VIDEO_AVAILABLE | tinyint(1)  | YES  |     | NULL    |       |
+    | created_at      | datetime    | NO   |     | NULL    |       |
+    | updated_at      | datetime    | NO   |     | NULL    |       |
+    +-----------------+-------------+------+-----+---------+-------+
     """
 
     __tablename__ = "player_game_log"
