@@ -12,9 +12,13 @@ $ docker compose up
 ```
 
 ### mysql 
-another window
+use mysql on another window
 ```sh
 $ docker container exec -it mysql_host bash -c "mysql test_database -uroot -proot"
+```
+
+show all tables
+```sh
 mysql> show tables;
 +-------------------------+
 | Tables_in_test_database |
@@ -27,7 +31,10 @@ mysql> show tables;
 | teams                   |
 +-------------------------+
 6 rows in set (0.00 sec)
+```
 
+show player table
+```sh
 mysql> SELECT * FROM inactive_players LIMIT 3;
 +----+-----------------+------------+------------+-----------+---------------------+---------------------+
 | id | full_name       | first_name | last_name  | is_active | created_at          | updated_at          |
@@ -37,7 +44,10 @@ mysql> SELECT * FROM inactive_players LIMIT 3;
 |  7 | Dan Schayes     | Dan        | Schayes    |         0 | 2022-08-19 13:41:37 | 2022-08-19 13:41:37 |
 +----+-----------------+------------+------------+-----------+---------------------+---------------------+
 3 rows in set (0.00 sec)
+```
 
+show game log by each player
+```sh
 mysql> SELECT * FROM player_game_log LIMIT 3;
 +-----------+-----------+------------+--------------+-------------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+------------+-----------------+---------------------+---------------------+
 | SEASON_ID | Player_ID | Game_ID    | GAME_DATE    | MATCHUP     | WL   | MIN  | FGM  | FGA  | FG_PCT | FG3M | FG3A | FG3_PCT | FTM  | FTA  | FT_PCT | OREB | DREB | REB  | AST  | STL  | BLK  | TOV  | PF   | PTS  | PLUS_MINUS | VIDEO_AVAILABLE | created_at          | updated_at          |
@@ -47,7 +57,10 @@ mysql> SELECT * FROM player_game_log LIMIT 3;
 | 22021     |    203500 | 0022100040 | OCT 24, 2021 | MEM @ LAL   | L    |   34 |    7 |   11 |  0.636 |    0 |    0 |       0 |    0 |    0 |      0 |    8 |    8 |   16 |    6 |    0 |    0 |    4 |    5 |   14 |         15 |               1 | 2022-08-23 17:32:59 | 2022-08-23 17:32:59 |
 +-----------+-----------+------------+--------------+-------------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+------------+-----------------+---------------------+---------------------+
 3 rows in set (0.00 sec)
+```
 
+show game log by each team
+```sh
 mysql> SELECT * FROM team_game_log LIMIT 3;
 +------------+------------+--------------+-------------+------+------+------+-------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+---------------------+---------------------+
 | Team_ID    | Game_ID    | GAME_DATE    | MATCHUP     | WL   | W    | L    | W_PCT | MIN  | FGM  | FGA  | FG_PCT | FG3M | FG3A | FG3_PCT | FTM  | FTA  | FT_PCT | OREB | DREB | REB  | AST  | STL  | BLK  | TOV  | PF   | PTS  | created_at          | updated_at          |
@@ -57,8 +70,10 @@ mysql> SELECT * FROM team_game_log LIMIT 3;
 | 1610612737 | 0022100043 | OCT 25, 2021 | ATL vs. DET | W    |    2 |    1 | 0.667 |  240 |   46 |   90 |  0.511 |   12 |   32 |   0.375 |   18 |   21 |  0.857 |   10 |   39 |   49 |   24 |   11 |    3 |   13 |   19 |  122 | 2022-08-27 11:40:01 | 2022-08-27 11:40:01 |
 +------------+------------+--------------+-------------+------+------+------+-------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+---------------------+---------------------+
 3 rows in set (0.00 sec)
+```
 
-# PTS ranking on 1 game
+show points ranking on 1 game in this season, using player game log table
+```sh
 mysql> SELECT p.full_name AS FULL_NAME, SUBSTRING(pgl.MATCHUP, 1, 3) AS team, pgl.GAME_DATE, pgl.MATCHUP, pgl.WL, pgl.PTS, pgl.MIN, pgl.FGM, pgl.FGA, pgl.FG_PCT, pgl.FG3M, pgl.FG3A, pgl.FG3_PCT, pgl.FTM, pgl.FTA, pgl.FT_PCT, pgl.OREB, pgl.DREB, pgl.REB, pgl.AST, pgl.STL, pgl.BLK, pgl.TOV, pgl.PF, pgl.PTS, pgl.PLUS_MINUS, pgl.updated_at FROM player_game_log AS pgl INNER JOIN all_players AS p ON pgl.Player_ID =
  p.id ORDER BY PTS DESC LIMIT 20;
 +-----------------------+------+--------------+-------------+------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+------------+---------------------+
@@ -86,8 +101,10 @@ mysql> SELECT p.full_name AS FULL_NAME, SUBSTRING(pgl.MATCHUP, 1, 3) AS team, pg
 | Joel Embiid           | PHI  | DEC 27, 2022 | PHI @ WAS   | L    |   48 |   36 |   17 |   32 |  0.531 |    1 |    5 |     0.2 |   13 |   14 |  0.929 |    4 |    6 |   10 |    1 |    3 |    3 |    3 |    5 |   48 |          8 | 2023-01-15 08:12:57 |
 +-----------------------+------+--------------+-------------+------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+------------+---------------------+
 20 rows in set (0.03 sec)
+```
 
-# Most FG3M on 1 game
+show most FG3M ranking, using player game log 
+```sh
 mysql> SELECT p.full_name AS FULL_NAME, SUBSTRING(pgl.MATCHUP, 1, 3) AS team, pgl.GAME_DATE, pgl.MATCHUP, pgl.WL, pgl.FG3M, pgl.MIN, pgl.FGM, pgl.FGA, pgl.FG_PCT, pgl.FG3M, pgl.FG3A, pgl.FG3_PCT, pgl.FTM, pgl.FTA, pgl.FT_PCT, pgl.OREB, pgl.DREB, pgl.REB, pgl.AST, pgl.STL, pgl.BLK, pgl.TOV, pgl.PF, pgl.PTS, pgl.PLUS_MINUS FROM player_game_log AS pgl INNER JOIN all_players AS p ON pgl.Player_ID = p.id WHERE pgl.FG3M = (SELECT MAX(pgl1.FG3M) FROM player_game_log AS pgl1);
 +----------------+------+--------------+-------------+------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+------------+
 | FULL_NAME      | team | GAME_DATE    | MATCHUP     | WL   | FG3M | MIN  | FGM  | FGA  | FG_PCT | FG3M | FG3A | FG3_PCT | FTM  | FTA  | FT_PCT | OREB | DREB | REB  | AST  | STL  | BLK  | TOV  | PF   | PTS  | PLUS_MINUS |
@@ -97,8 +114,10 @@ mysql> SELECT p.full_name AS FULL_NAME, SUBSTRING(pgl.MATCHUP, 1, 3) AS team, pg
 | Zach LaVine    | CHI  | JAN 06, 2023 | CHI @ PHI   | W    |   11 |   38 |   14 |   19 |  0.737 |   11 |   13 |   0.846 |    2 |    2 |      1 |    1 |    1 |    2 |    6 |    2 |    1 |    3 |    1 |   41 |         17 |
 +----------------+------+--------------+-------------+------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+------------+
 3 rows in set (0.03 sec)
+```
 
-# PTS ranking in this season
+show points ranking in this season
+```sh
 mysql> SELECT MAX(p.full_name) AS FULL_NAME, SUM(pgl.FG3M) AS FG3M, SUM(pgl.MIN) AS MIN, SUM(pgl.FGM) AS FGM, SUM(pgl.FGA) AS FGA, SUM(pgl.FGM) / SUM(pgl.FGA) AS FG_PCT, SUM(pgl.FG3M) AS FG3M, SUM(pgl.FG3A) AS FG3A, SUM(pgl.FG3M) / SUM(pgl.FG3A) AS FG3_PCT, SUM(pgl.FTM) AS FTM, SUM(pgl.FTA) AS FTA, SUM(pgl.FTM) / SUM(pgl.FTA) AS FT_PCT, SUM(pgl.OREB) AS OREB, SUM(pgl.DREB) AS DREB, SUM(pgl.REB) AS REB, SUM(pgl.AST) AS AST, SUM(pgl.STL) AS STL, SUM(pgl.BLK) AS BLK, SUM(pgl.TOV) AS TOV, SUM(pgl.PF) AS PF, SUM(pgl.PTS) AS PTS, MAX(pgl.updated_at) AS updated_at FROM player_game_log AS pgl INNER JOIN all_players AS
 p ON pgl.Player_ID = p.id GROUP BY pgl.Player_ID ORDER BY PTS DESC LIMIT 10;
 +-------------------------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+---------------------+
@@ -116,18 +135,20 @@ p ON pgl.Player_ID = p.id GROUP BY pgl.Player_ID ORDER BY PTS DESC LIMIT 10;
 | Trae Young              |   88 | 1358 |  330 |  780 | 0.4231 |   88 |  270 |  0.3259 |  296 |  331 | 0.8943 |   26 |   81 |  107 |  373 |   32 |    6 |  145 |   58 | 1044 | 2023-01-15 08:12:57 |
 +-------------------------+------+------+------+------+--------+------+------+---------+------+------+--------+------+------+------+------+------+------+------+------+------+---------------------+
 10 rows in set (0.05 sec)
+```
 
-# the number of triple-double games by each player
-mysql> SELECT MAX(p.full_name) AS FULL_NAME, COUNT(1) FROM player_game_log AS pgl INNER JOIN all_players AS p ON p.id = pgl.Player_ID WHERE pgl.PTS >= 10 AND pgl.AST >= 10 AND pgl.REB >= 10 GROUP BY pgl.Player_ID ORDER BY COUNT(1) DESC LIMIT 5;
-+------------------+----------+
-| FULL_NAME        | COUNT(1) |
-+------------------+----------+
-| Nikola Jokic     |       11 |
-| Luka Doncic      |       10 |
-| Domantas Sabonis |        4 |
-| James Harden     |        3 |
-| Ja Morant        |        3 |
-+------------------+----------+
+show the number of triple-double games by each player, using player game log
+```sh
+mysql> SELECT MAX(p.full_name) AS FULL_NAME, COUNT(1) AS GAMES FROM player_game_log AS pgl INNER JOIN all_players AS p ON p.id = pgl.Player_ID WHERE pgl.PTS >= 10 AND pgl.AST >= 10 AND pgl.REB >= 10 GROUP BY pgl.Player_ID ORDER BY COUNT(1) DESC LIMIT 5;
++------------------+-------+
+| FULL_NAME        | GAMES |
++------------------+-------+
+| Nikola Jokic     |    11 |
+| Luka Doncic      |    10 |
+| Domantas Sabonis |     4 |
+| James Harden     |     3 |
+| Ja Morant        |     3 |
++------------------+-------+
 5 rows in set (0.01 sec)
 ```
 
