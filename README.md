@@ -15,6 +15,19 @@ $ docker compose up
 another window
 ```sh
 $ docker container exec -it mysql_host bash -c "mysql test_database -uroot -proot"
+mysql> show tables;
++-------------------------+
+| Tables_in_test_database |
++-------------------------+
+| active_players          |
+| all_players             |
+| inactive_players        |
+| player_game_log         |
+| team_game_log           |
+| teams                   |
++-------------------------+
+6 rows in set (0.00 sec)
+
 mysql> SELECT * FROM inactive_players LIMIT 3;
 +----+-----------------+------------+------------+-----------+---------------------+---------------------+
 | id | full_name       | first_name | last_name  | is_active | created_at          | updated_at          |
