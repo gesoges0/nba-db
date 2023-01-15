@@ -1,18 +1,14 @@
 import time
-from typing import Iterator, Union
-
-from nba_api.stats import endpoints as ep
-from nba_api.stats.static import players, teams
 
 from src.api import (
     initialize_active_players,
     initialize_all_players,
     initialize_inactive_players,
     initialize_player_game_log,
+    initialize_team_game_log,
     initialize_teams,
 )
-from src.db import create_tables, db
-from src.tables import PlayerGameLog, TeamGameLog
+from src.db import create_tables
 
 
 def sleep(seconds: int) -> None:
@@ -44,6 +40,9 @@ def initialize(args):
 
     # game log by player
     initialize_player_game_log()
+
+    # game log by team
+    initialize_team_game_log()
 
 
 # def initialize_stats():

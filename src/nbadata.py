@@ -17,19 +17,19 @@ def get_player_game_log_dicts() -> Iterator[GAMELOG]:
     # FIXME:
     #  season引数を取れるようにする
     #  seasonごとにactiveな選手一覧を作り, その選手に対して seasonで引く
-    for i, p in enumerate(players.get_active_players()[:20]):
+    for i, p in enumerate(iterate_and_wait(players.get_active_players()[:5])):
         player_game_log: list[GAMELOG] = playergamelog.PlayerGameLog(
             player_id=p["id"]
         ).get_normalized_dict()["PlayerGameLog"]
-        for player_game_log_dict in iterate_and_wait(player_game_log):
+        for player_game_log_dict in player_game_log:
             yield player_game_log_dict
 
 
 def get_team_game_log_dicts() -> Iterator[GAMELOG]:
     # FIXME: season引数を取れるようにする
-    for i, t in enumerate(teams.get_teams()[:20]):
+    for i, t in enumerate(iterate_and_wait(teams.get_teams()[:5])):
         team_game_log: list[GAMELOG] = teamgamelog.TeamGameLog(
             team_id=t["id"]
         ).get_normalized_dict()["TeamGameLog"]
-        for team_game_log_dict in iterate_and_wait(team_game_log):
+        for team_game_log_dict in team_game_log:
             yield team_game_log_dict
