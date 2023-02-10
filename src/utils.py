@@ -1,5 +1,6 @@
 import time
-from typing import Iterator, TypeVar, Any
+from typing import Any, Iterator, TypeVar
+
 from src.db import db
 
 T = TypeVar("T")

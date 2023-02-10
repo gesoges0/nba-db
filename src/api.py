@@ -10,7 +10,7 @@ from src.tables import (
     TeamGameLog,
     Teams,
 )
-from src.utils import display_func_name, bulk_insert
+from src.utils import bulk_insert, display_func_name
 
 
 @display_func_name
