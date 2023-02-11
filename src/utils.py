@@ -32,7 +32,7 @@ def display_func_name(func):
     return display
 
 
-def bulk_insert(datas: list[Any]):
+def bulk_insert(datas: list[Any]) -> None:
     try:
         db.db_session.bulk_save_objects(datas)
     except Exception:
