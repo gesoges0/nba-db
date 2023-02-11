@@ -18,6 +18,10 @@ def get_player_game_log_dicts() -> Iterator[GAMELOG]:
     #  season引数を取れるようにする
     #  seasonごとにactiveな選手一覧を作り, その選手に対して seasonで引く
     for i, p in enumerate(iterate_and_wait(players.get_active_players())):
+        # FIXME:
+        #   検証段階ではすべてリクエストしないようにする
+        if i == 3:
+            break
         player_game_log: list[GAMELOG] = playergamelog.PlayerGameLog(
             player_id=p["id"]
         ).get_normalized_dict()["PlayerGameLog"]
@@ -28,6 +32,10 @@ def get_player_game_log_dicts() -> Iterator[GAMELOG]:
 def get_team_game_log_dicts() -> Iterator[GAMELOG]:
     # FIXME: season引数を取れるようにする
     for i, t in enumerate(iterate_and_wait(teams.get_teams())):
+        # FIXME:
+        #   検証段階ではすべてリクエストしないようにする
+        if i == 3:
+            break
         team_game_log: list[GAMELOG] = teamgamelog.TeamGameLog(
             team_id=t["id"]
         ).get_normalized_dict()["TeamGameLog"]

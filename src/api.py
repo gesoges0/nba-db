@@ -40,7 +40,7 @@ def initialize_player_game_log():
     # FIXME:
     #  現状, active_playerのみ, current_seasonのみが対象
     #  season引数を取れるようにする
-    bulk_insert(PlayerGameLog(**pgl) for pgl in get_player_game_log_dicts())
+    bulk_insert([PlayerGameLog(**pgl) for pgl in get_player_game_log_dicts()])
 
 
 @display_func_name
@@ -48,4 +48,4 @@ def initialize_team_game_log():
     # FIXME:
     #  現状, active_playerのみ, current_seasonのみが対象
     #  season引数を取れるようにする
-    bulk_insert(TeamGameLog(**tgl) for tgl in get_team_game_log_dicts())
+    bulk_insert([TeamGameLog(**tgl) for tgl in get_team_game_log_dicts()])
