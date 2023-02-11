@@ -1,5 +1,7 @@
 import time
-from typing import Iterator, TypeVar
+from typing import Any, Iterator, TypeVar
+
+from src.db import db
 
 T = TypeVar("T")
 
@@ -28,3 +30,12 @@ def display_func_name(func):
         return func(*args)
 
     return display
+
+
+def bulk_insert(datas: list[Any]) -> None:
+    try:
+        db.db_session.bulk_save_objects(datas)
+    except Exception:
+        raise RuntimeError(f"bulk insert: {datas}")
+    else:
+        db.db_session.commit()
