@@ -35,7 +35,7 @@ def display_func_name(func):
 def bulk_insert(datas: list[Any]):
     try:
         db.db_session.bulk_save_objects(datas)
-    except Exception as e:
+    except Exception:
         raise RuntimeError(f"bulk insert: {datas}")
     else:
         db.db_session.commit()
